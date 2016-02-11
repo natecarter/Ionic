@@ -71,7 +71,7 @@ angular.module('conFusion.controllers', [])
     };
 })
 
-.controller('MenuController', ['$scope', 'menuFactory', 'favoriteFactory', 'baseURL', '$ionicListDelegate', function ($scope, menuFactory, favoriteFactory, baseURL, $ionicListDelegate) {
+.controller('MenuController', ['$scope', 'dishes', 'menuFactory', 'favoriteFactory', 'baseURL', '$ionicListDelegate', function ($scope, dishes, menuFactory, favoriteFactory, baseURL, $ionicListDelegate, $localStorage) {
             
             $scope.baseURL = baseURL;
             $scope.tab = 1;
@@ -79,16 +79,7 @@ angular.module('conFusion.controllers', [])
             $scope.showDetails = false;
             $scope.showMenu = false;
             $scope.message = "Loading ...";
-            
-            menuFactory.query(
-                function(response) {
-                    $scope.dishes = response;
-                    $scope.showMenu = true;
-                },
-                function(response) {
-                    $scope.message = "Error: "+response.status + " " + response.statusText;
-                });
-
+            $scope.dishes = dishes;
                         
             $scope.select = function(setTab) {
                 $scope.tab = setTab;
@@ -119,6 +110,7 @@ angular.module('conFusion.controllers', [])
                 console.log("index is " + index);
                 
                 favoriteFactory.addToFavorites(index);
+        
                 $ionicListDelegate.closeOptionButtons();
             }
             
@@ -241,17 +233,15 @@ angular.module('conFusion.controllers', [])
     $scope.leader = leader;
     $scope.showDish = false;
     $scope.message = "Loading ...";
-
     $scope.dish = dish;
-
     $scope.promotion = promotion;
 
 }])
 
-.controller('AboutController', ['$scope', 'corporateFactory', 'baseURL', function($scope, corporateFactory, baseURL) {
+.controller('AboutController', ['$scope', 'leaders', 'corporateFactory', 'baseURL', function($scope, leaders, corporateFactory, baseURL) {
             
                     $scope.baseURL=baseURL;
-                    $scope.leaders = corporateFactory.query();
+                    $scope.leaders = leaders;
                     console.log($scope.leaders);
             
                     }])
@@ -260,12 +250,9 @@ angular.module('conFusion.controllers', [])
 
     $scope.baseURL = baseURL;
     $scope.shouldShowDelete = false;
-
     $scope.favorites = favorites;
-
     $scope.dishes = dishes;
-    
-    console.log($scope.dishes, $scope.favorites);
+    //console.log($scope.dishes, $scope.favorites);
 
     $scope.toggleDelete = function () {
         $scope.shouldShowDelete = !$scope.shouldShowDelete;
@@ -273,7 +260,6 @@ angular.module('conFusion.controllers', [])
     }
 
     $scope.deleteFavorite = function (index) {
-
         var confirmPopup=$ionicPopup.confirm({
             title: 'Confirm Delete',
             template: 'Are you sure you want to delete this item?'
@@ -283,6 +269,7 @@ angular.module('conFusion.controllers', [])
             if(res) {
                 console.log('Ok to delete');
                 favoriteFactory.deleteFromFavorites(index);
+               
             } else{
                 console.log('Canceled delete');
             }
