@@ -79,7 +79,11 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
       views: {
         'mainContent': {
           templateUrl: 'templates/aboutus.html',
-            controller: 'AboutController'
+            controller: 'AboutController',
+            resolve: {
+              dishes:  ['corporateFactory', function(corporateFactory) {
+                return corporateFactory.query();
+              }]}
         }
       }
     })
