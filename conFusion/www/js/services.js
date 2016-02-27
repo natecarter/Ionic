@@ -30,7 +30,7 @@ angular.module('conFusion.services', ['ngResource'])
     
         }])
 
-.factory('favoriteFactory', ['$resource', 'baseURL','$localStorage', function($resource, baseURL, $localStorage) {
+.factory('favoriteFactory', ['$resource', 'baseURL','$localStorage', '$cordovaLocalNotification', '$cordovaToast', '$ionicPlatform', function($resource, baseURL, $localStorage, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
            
             var favFac = {};  //returned
             var favorites = $localStorage.getObject('favorites', '[]'); //keeps track of index of favorites
@@ -43,12 +43,12 @@ angular.module('conFusion.services', ['ngResource'])
                     return;
                 }
                 
-                favorites.push({id: index});
-                $localStorage.storeObject('favorites', favorites);
-                console.log("added to favorites");
+                    favorites.push({id: index});
+                    $localStorage.storeObject('favorites', favorites);
+                    console.log("added to favorites");
                 
-                
-            };
+    
+        };
             
                 favFac.getFavorites = function() {
                     //favorites = $localStorage.getObject('favorites', '{}');

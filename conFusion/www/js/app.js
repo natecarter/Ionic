@@ -4,9 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.services'])
+angular.module('conFusion', ['ngCordova', 'ionic', 'conFusion.controllers','conFusion.services'])
 
-.run(function($ionicPlatform, $rootScope, $ionicLoading) {
+.run(function($ionicPlatform, $rootScope, $ionicLoading, $cordovaSplashscreen, $timeout) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,6 +19,10 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+      $timeout(function(){
+                $cordovaSplashscreen.hide();
+      },3000);
+
   });
     
         $rootScope.$on('loading:show', function () {
@@ -45,14 +49,14 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  .state('app', {
+.state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/sidebar.html',
     controller: 'AppCtrl'
   })
 
-   .state('app.home', {
+.state('app.home', {
     url: '/home',
     views: {
       'mainContent': {
@@ -74,7 +78,7 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
     }
   }})
 
-  .state('app.aboutus', {
+.state('app.aboutus', {
       url: '/aboutus',
       views: {
         'mainContent': {
@@ -88,7 +92,7 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
       }
     })
 
-   .state('app.contactus', {
+.state('app.contactus', {
       url: '/contactus',
       views: {
         'mainContent': {
@@ -97,7 +101,7 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
       }
     })
   
-  .state('app.favorites', {
+.state('app.favorites', {
       url: '/favorites',
       views: {
         'mainContent': {
@@ -115,7 +119,7 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
       }
     })
 
-    .state('app.menu', {
+.state('app.menu', {
       url: '/menu',
       views: {
         'mainContent': {
@@ -129,7 +133,7 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
       }
     })
 
-  .state('app.dishdetails', {
+.state('app.dishdetails', {
     url: '/menu/:id',
     views: {
       'mainContent': {
